@@ -1,21 +1,26 @@
 from tkinter import *
 from tkinter import ttk
 
-ALL_BUTTONS_TEXT = ['1', '2', '3', ' + ', '(',
+ALL_BUTTONS_TEXT = ['1', '2', '3', '+', '(',
                     '4', '5', '6', '-', ')',
                     '7', '8', '9', '*', 'e',
-                    '.', '0', ' / ', ' = ', 'C']
+                    '.', '0', '/', '=', 'C']
 
 root = Tk()
 root.title("Tkinter calculator")
-root.geometry("400x500")
+root.geometry("800x800")
+
+style = ttk.Style()
+style.theme_use('alt')
+style.configure('TButton', background = 'black', foreground = 'white', font='Arial 15', width = 20, borderwidth=0, focusthickness=0, focuscolor='none')
+style.map('TButton', background=[('active', '#888')])
 
 for c in range(5): root.columnconfigure(index=c, weight=1)
 for r in range(5): root.rowconfigure(index=r, weight=1)
 
 entry_text = StringVar()
-entry_field = Entry(font=('Consolas 30'), justify=CENTER, textvariable=entry_text)
-entry_field.grid(row=0, column=0, columnspan=5, ipadx=0, ipady=0, padx=0, pady=0, sticky=NSEW)
+entry_field = Entry(font=('Consolas 30'), bg='black', fg='white', borderwidth=0, justify=CENTER, textvariable=entry_text)
+entry_field.grid(row=0, column=0, columnspan=5, sticky=NSEW)
 
 
 def equals_button_command():
@@ -44,9 +49,8 @@ def add_buttons_to_window(column_count, index):
 		text_button_command = equals_button_command
 	else:
 		text_button_command = lambda: add_character_to_entry_field(button_text)
-	button = Button(root, text=button_text, command=text_button_command)
-
-	button.grid(row=index // column_count, column=index % column_count, ipadx=0, ipady=0, padx=0, pady=0, sticky=NSEW)
+	button = ttk.Button(root, text=button_text, command=text_button_command)
+	button.grid(row=index // column_count, column=index % column_count, sticky=NSEW)
 
 
 for i in range(5, 25):
